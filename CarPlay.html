@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic App Drawer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="mini-apps" id="miniApps">
+            <!-- Mini-apps will be generated dynamically -->
+        </div>
+        <div id="statusArea" class="status-area">
+            <div id="currentTime" class="time"></div>
+            <div class="signal-info">
+                <span>5G </span>
+                <img src="senal.png" alt="Signal icon" class="icon-signal">
+            </div>
+            <img src="bateria.png" alt="Battery icon" class="icon-battery">
+        </div>
+        <div class="fullscreen-toggle">
+            <img src="sombra-de-forma-cuadrada.png" alt="Fullscreen icon" id="fullscreenButton">
+            <img src="opcion-de-reordenar.png" alt="Fullscreen icon" id="fullscreenButton">
+        </div>
+        
+    </div>
+    <div class="app-container" id="appContainer">
+        <!-- Applications will be dynamically generated here -->
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Radio Player</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Estilos para el reproductor */
+        .radio-player {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+            margin-left: 20px;
+        }
+
+        .radio-player-container {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 3px solid rgba(255, 255, 255, 0.4);
+            border-radius: 20px;
+            padding: 20px;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .radio-image {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 15px;
+            margin-bottom: 15px;
+        }
+
+        .radio-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .radio-controls button {
+            background-color: #34495e;
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            flex: 1;
+            margin: 0 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .radio-controls button:hover {
+            background-color: #1abc9c;
+        }
+
+        .radio-controls i {
+            font-size: 20px;
+        }
+
+        .progress-bar-container {
+            margin-top: 10px;
+            background-color: #34495e;
+            height: 10px;
+            border-radius: 10px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: #1abc9c;
+            width: 0;
+        }
+
+        .volume-control {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .volume-control input[type="range"] {
+            flex-grow: 1;
+            margin-left: 10px;
+        }
+
+        audio {
+            display: none; /* Oculta la interfaz predeterminada */
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="mini-apps" id="miniApps">
+            <!-- Mini-apps will be generated dynamically -->
+        </div>
+        <div id="statusArea" class="status-area">
+            <div id="currentTime" class="time"></div>
+            <div class="signal-info">
+                <span>5G </span>
+                <img src="senal.png" alt="Signal icon" class="icon-signal">
+            </div>
+            <img src="bateria.png" alt="Battery icon" class="icon-battery">
+        </div>
+        <div class="fullscreen-toggle">
+            <img src="sombra-de-forma-cuadrada.png" alt="Fullscreen icon" id="fullscreenButton">
+            <img src="opcion-de-reordenar.png" alt="Fullscreen icon" id="fullscreenButton">
+        </div>
+    </div>
+
+    <div class="radio-player">
+        <div class="radio-player-container">
+            <img src="vectorM.png" alt="Radio Image" class="radio-image">
+            <div class="radio-controls">
+                <button id="playBtn">
+                    <i class="fas fa-play"></i> <!-- Icono de Play -->
+                </button>
+                <button id="pauseBtn">
+                    <i class="fas fa-pause"></i> <!-- Icono de Pause -->
+                </button>
+                <button id="stopBtn">
+                    <i class="fas fa-stop"></i> <!-- Icono de Stop -->
+                </button>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <div class="volume-control">
+                <button id="muteBtn">
+                    <i class="fas fa-volume-mute"></i> <!-- Icono de Mute -->
+                </button>
+                <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.1" value="1">
+            </div>
+            <audio id="radio" src="https://streamingcwsradio30.com:7005/stream.mp3"></audio>
+        </div>
+    </div>
+
+    <script>
+        const radio = document.getElementById('radio');
+        const playBtn = document.getElementById('playBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const muteBtn = document.getElementById('muteBtn');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const progressBar = document.getElementById('progressBar');
+
+        let isMuted = false;
+
+        // Reproducir radio
+        playBtn.addEventListener('click', () => {
+            radio.play();
+        });
+
+        // Pausar radio
+        pauseBtn.addEventListener('click', () => {
+            radio.pause();
+        });
+
+        // Detener radio (pausar y reiniciar)
+        stopBtn.addEventListener('click', () => {
+            radio.pause();
+            radio.currentTime = 0;
+        });
+
+        // Silenciar/des-silenciar radio
+        muteBtn.addEventListener('click', () => {
+            isMuted = !isMuted;
+            radio.muted = isMuted;
+        });
+
+        // Controlar volumen
+        volumeSlider.addEventListener('input', (event) => {
+            radio.volume = event.target.value;
+        });
+
+        // Actualizar la barra de progreso
+        radio.addEventListener('timeupdate', () => {
+            const progress = (radio.currentTime / radio.duration) * 100;
+            progressBar.style.width = `${progress}%`;
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
